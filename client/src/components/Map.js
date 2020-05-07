@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ReactMapGL, { NavigationControl, Marker } from 'react-map-gl';
 import { withStyles } from '@material-ui/core/styles';
+import Blog from './Blog';
 import PinIcon from './PinIcon';
 import Context from '../context';
 // import Button from "@material-ui/core/Button";
@@ -89,6 +90,7 @@ const Map = ({ classes }) => {
           </Marker>
         )}
       </ReactMapGL>
+      <Blog />
     </div>
   );
 };
