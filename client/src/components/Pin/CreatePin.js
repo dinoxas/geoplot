@@ -1,4 +1,7 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useClient } from '../../client';
+// import { GraphQLClient } from 'graphql-request';
 import Context from '../../context';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,16 +11,51 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhotoTwoTone';
 import LandscapeIcon from '@material-ui/icons/LandscapeOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import SaveIcon from '@material-ui/icons/SaveTwoTone';
+import { CREATE_PIN_MUTATION } from '../../graphql/mutations';
 
 const CreatePin = ({ classes }) => {
-  const { dispatch } = useContext(Context);
+  const client = useClient();
+  const { state, dispatch } = useContext(Context);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
+  // state to prevent multipe submit
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(title, image, content);
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+
+      setSubmitting(true);
+
+      const url = await handleImageUpload();
+
+      const { latitude, longitude } = state.draft;
+
+      const variables = {
+        title,
+        image: url,
+        content,
+        latitude,
+        longitude
+      };
+
+      // destructure data object to just get back data within the name of mutation eg createPin
+      const { createPin } = await client.request(
+        CREATE_PIN_MUTATION,
+        variables
+      );
+
+      dispatch({ type: 'CREATE_PIN', payload: createPin });
+
+      console.log('Pin created', { createPin });
+
+      // clear draft
+      handleDeleteDraft();
+    } catch (err) {
+      setSubmitting(false);
+      console.error('ERROR creating Pin', err);
+    }
   };
 
   const handleDeleteDraft = () => {
@@ -25,6 +63,20 @@ const CreatePin = ({ classes }) => {
     setContent('');
     setImage('');
     dispatch({ type: 'DELETE_DRAFT' });
+  };
+
+  const handleImageUpload = async () => {
+    const data = new FormData();
+    data.append('file', image);
+    data.append('upload_preset', 'geoplot');
+    data.append('cloud_name', 'dzu8dkpxy');
+
+    const res = await axios.post(
+      'https://api.cloudinary.com/v1_1/dzu8dkpxy/image/upload',
+      data
+    );
+
+    return res.data.url;
   };
 
   return (
@@ -92,7 +144,7 @@ const CreatePin = ({ classes }) => {
           className={classes.button}
           variant='contained'
           color='secondary'
-          disabled={!title.trim() || !content.trim || !image}
+          disabled={!title.trim() || !content.trim || !image || submitting}
           onClick={handleSubmit}
         >
           Submit

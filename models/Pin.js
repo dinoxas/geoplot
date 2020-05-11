@@ -4,7 +4,6 @@ const PinSchema = new mongoose.Schema(
   {
     // _id is generated automatically by Mongo
     // timestamp - createdAt everytime Pin is created or edited
-
     title: String,
     content: String,
     image: String,
