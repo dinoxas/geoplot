@@ -20,7 +20,7 @@ const Login = ({ classes }) => {
       });
 
       const { me } = await client.request(ME_QUERY);
-      // console.log({ me });
+
       dispatch({
         type: 'LOGIN_USER',
         payload: me
@@ -36,6 +36,10 @@ const Login = ({ classes }) => {
 
   const onFailure = (err) => {
     console.error('Error logging in', err);
+    dispatch({
+      type: 'IS_LOGGED_IN',
+      payload: false
+    });
   };
 
   return (
