@@ -41,14 +41,7 @@ const CreatePin = ({ classes }) => {
       };
 
       // destructure data object to just get back data within the name of mutation eg createPin
-      const { createPin } = await client.request(
-        CREATE_PIN_MUTATION,
-        variables
-      );
-
-      dispatch({ type: 'CREATE_PIN', payload: createPin });
-
-      console.log('Pin created', { createPin });
+      await client.request(CREATE_PIN_MUTATION, variables);
 
       // clear draft
       handleDeleteDraft();
