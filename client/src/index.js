@@ -16,11 +16,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const wsLink = new WebSocketLink({
   // websocket version of api endpoint
-  uri: 'ws://localhost:4000/graphql',
-  options: {
-    // if connection fails try to reconnect
-    reconnect: true
-  }
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? 'wss://dinoxas-geoplot.herokuapp.com/graphql'
+      : 'ws://localhost:4000/graphql',
+  options: { reconnect: true }
 });
 
 const client = new ApolloClient({

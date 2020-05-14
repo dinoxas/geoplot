@@ -5,17 +5,20 @@ const mongoose = require('mongoose');
 const { findOrCreateUser } = require('./controllers/userController');
 require('dotenv').config();
 
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('DB connected!'))
-  .catch((err) => console.error(err));
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+});
 
 const server = new ApolloServer({
+  cors: {
+    origin: '*',
+    credentials: true
+  },
   typeDefs,
   resolvers,
+  playground: true,
   context: async ({ req }) => {
     let authToken = null;
     let currentUser = null;
@@ -26,13 +29,15 @@ const server = new ApolloServer({
         currentUser = await findOrCreateUser(authToken);
       }
     } catch (err) {
-      console.error(`Unable to authenticate user with token ${authToken}`);
+      console.warn(`Unable to authenticate using auth token: ${authToken}`);
     }
     // make currentUser available to resolvers to execute query
-    return { currentUser };
+    return { authToken, currentUser };
   }
 });
 
-server.listen().then(({ url }) => {
+const port = process.env.PORT || 4000;
+
+server.listen(port).then(({ url }) => {
   console.log(`Server listening on ${url}`);
 });
