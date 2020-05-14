@@ -18,6 +18,7 @@ const server = new ApolloServer({
   },
   typeDefs,
   resolvers,
+  introspection: true,
   playground: true,
   context: async ({ req }) => {
     let authToken = null;
@@ -36,8 +37,6 @@ const server = new ApolloServer({
   }
 });
 
-const port = process.env.PORT || 4000;
-
-server.listen(port).then(({ url }) => {
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
   console.log(`Server listening on ${url}`);
 });
