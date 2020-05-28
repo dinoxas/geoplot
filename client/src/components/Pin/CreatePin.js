@@ -61,13 +61,14 @@ const CreatePin = ({ classes }) => {
   };
 
   const handleImageUpload = async () => {
+    const CLOUDINARY_ID = process.env.REACT_APP_CLOUDINARY_ID;
     const data = new FormData();
     data.append('file', image);
     data.append('upload_preset', 'geoplot');
-    data.append('cloud_name', 'dzu8dkpxy');
+    data.append('cloud_name', CLOUDINARY_ID);
 
     const res = await axios.post(
-      'https://api.cloudinary.com/v1_1/dzu8dkpxy/image/upload',
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`,
       data
     );
 
@@ -79,7 +80,7 @@ const CreatePin = ({ classes }) => {
       <Typography
         className={classes.alignCenter}
         component='h2'
-        variant='h4'
+        variant='h6'
         color='secondary'
       >
         <LandscapeIcon className={classes.iconLarge} /> Pin Location
@@ -171,7 +172,7 @@ const styles = (theme) => ({
     alignItems: 'center'
   },
   iconLarge: {
-    fontSize: 40,
+    fontSize: 30,
     marginRight: theme.spacing.unit
   },
   leftIcon: {
@@ -184,7 +185,7 @@ const styles = (theme) => ({
   },
   button: {
     marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: 0,
     marginRight: theme.spacing.unit,
     marginLeft: 0
   }

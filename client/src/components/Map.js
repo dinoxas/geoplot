@@ -113,7 +113,7 @@ const Map = ({ classes }) => {
       <ReactMapGL
         scrollZoom={!mobileSize}
         onClick={handleMapClick}
-        mapboxApiAccessToken='pk.eyJ1IjoiZGlub3hhcyIsImEiOiJjazl3b3JsN2wwYjcxM251aDMxYW5wNmYxIn0.xA8O99XjZmFMu1kg0mIDwg'
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         width='100vw'
         height='calc(100vh - 64px)'
         mapStyle='mapbox://styles/mapbox/streets-v9'
@@ -143,7 +143,7 @@ const Map = ({ classes }) => {
             offsetLeft={-19}
             offsetTop={-37}
           >
-            <PinIcon size={40} color='pink' />
+            <PinIcon size={40} color='orchid' />
           </Marker>
         )}
 

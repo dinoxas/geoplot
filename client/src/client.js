@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { GraphQLClient } from 'graphql-request';
 
+const LOCAL_URL = 'http://localhost:4000';
+
 export const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://dinoxas-geoplot.herokuapp.com/graphql'
-    : 'http://localhost:4000/graphql';
+    ? `${process.env.REACT_APP_HEROKUAPP_URL}/graphql`
+    : `http://localhost:4000/graphql`;
 
 export const useClient = () => {
   const [idToken, setIdToken] = useState('');

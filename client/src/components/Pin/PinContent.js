@@ -14,7 +14,7 @@ const PinContent = ({ classes }) => {
 
   return (
     <div className={classes.root}>
-      <Typography component='h2' variant='h4' color='primary' gutterBottom>
+      <Typography component='h2' variant='h6' color='primary' gutterBottom>
         {title}
       </Typography>
 

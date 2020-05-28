@@ -5,7 +5,9 @@ import { GoogleLogin } from 'react-google-login';
 import { withStyles } from '@material-ui/core/styles';
 import Context from '../../context';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import { ME_QUERY } from '../../graphql/queries';
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 
 const Login = ({ classes }) => {
   const { dispatch } = useContext(Context);
@@ -44,34 +46,55 @@ const Login = ({ classes }) => {
 
   return (
     <div className={classes.root}>
-      <Typography
-        component='h1'
-        variant='h3'
-        gutterBottom
-        noWrap
-        style={{ color: 'rgb(66, 133, 244)' }}
-      >
-        Welcome
-      </Typography>
-      <GoogleLogin
-        clientId='458097978286-v550e89q89mleidi7hse24c7mnuled5i.apps.googleusercontent.com'
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        isSignedIn={true}
-        theme='dark'
-        buttonText='Log In with Google'
-      />
+      <Paper className={classes.login}>
+        <PersonPinCircleIcon className={classes.icon} color='primary' />
+        <Typography
+          component='h1'
+          variant='h5'
+          gutterBottom
+          align='center'
+          noWrap
+        >
+          Welcome to <br /> GeoPlot
+        </Typography>
+
+        <GoogleLogin
+          clientId={process.env.REACT_APP_OAUTH_CLIENT_ID}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          isSignedIn={true}
+          theme='dark'
+          buttonText='Log In with Google'
+          className={classes.loginButton}
+        />
+      </Paper>
     </div>
   );
 };
 
 const styles = {
   root: {
+    background: '#f5f5f5',
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  login: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    minWidth: '300px',
+    maxWidth: '280px'
+  },
+  loginButton: {
+    marginTop: '30px'
+  },
+  icon: {
+    color: 'primary',
+    fontSize: 50
   }
 };
 

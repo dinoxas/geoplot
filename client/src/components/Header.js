@@ -4,7 +4,7 @@ import Signout from './Auth/Signout';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import MapIcon from '@material-ui/icons/Map';
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import Typography from '@material-ui/core/Typography';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 
@@ -18,7 +18,7 @@ const Header = ({ classes }) => {
       <AppBar position='static'>
         <Toolbar>
           <div className={classes.grow}>
-            <MapIcon className={classes.icon} />
+            <PersonPinCircleIcon className={classes.icon} />
             <Typography
               className={mobileSize ? classes.mobile : ''}
               component='h1'
@@ -64,15 +64,16 @@ const styles = (theme) => ({
   },
   icon: {
     marginRight: theme.spacing.unit,
-    color: 'green',
-    fontSize: 45
+    color: 'white',
+    fontSize: 40
   },
   mobile: {
     display: 'none'
   },
   picture: {
-    height: '50px',
-    borderRadius: '90%',
+    height: '40px',
+    border: '2px solid white',
+    borderRadius: '50%',
     marginRight: theme.spacing.unit * 2
   }
 });

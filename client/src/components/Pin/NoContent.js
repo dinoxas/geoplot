@@ -5,16 +5,16 @@ import Typography from '@material-ui/core/Typography';
 
 const NoContent = ({ classes }) => (
   <div className={classes.root}>
-    <ExploreIcon className={classes.icon} />
+    <ExploreIcon className={classes.icon} color='primary' />
     <Typography
-      component='h2'
-      variant='h6'
+      component='p'
       align='center'
+      variant='subtitle1'
       color='textPrimary'
       gutterBottom
       noWrap
     >
-      Click on the map tp add a pin
+      Click on the map to add a pin
     </Typography>
   </div>
 );
@@ -28,7 +28,7 @@ const styles = (theme) => ({
   },
   icon: {
     margin: theme.spacing.unit,
-    fontSize: '80px'
+    fontSize: '48px'
   }
 });
 
